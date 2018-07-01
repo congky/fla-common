@@ -25,8 +25,9 @@ class GetUserInfoByToken extends AbstractBusinessFunction
 
         // get user information
         $builder = new QueryBuilder();
-        $builder->add(' SELECT A.user_token, B.username, B.full_name, D.user_type_code, ')
-                ->add(' D.user_type_name, E.role_code AS current_role_code, E.role_name AS current_role_name ')
+        $builder->add(' SELECT B.user_id, A.user_token, B.username, B.full_name, D.user_type_code, ')
+                ->add(' D.user_type_name, E.role_id AS current_role_id, E.role_code AS current_role_code, ')
+                ->add(' E.role_name AS current_role_name ')
                 ->add(' FROM ')->add(UserLoggedInfo::getTableName())->add(' A ')
                 ->add(' INNER JOIN ')->add(User::getTableName())->add(' B ON A.user_id = B.user_id ')
                 ->add(' INNER JOIN ')->add(UserAdditionalInfo::getTableName())->add(' C ON A.user_id = C.user_id ')
