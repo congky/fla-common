@@ -10,9 +10,13 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::prefix('api')->group(['namespace' => 'App\Common\Controllers'], function () {
-    Route::post('login', 'AuthController@login')->middleware("auth");
-    Route::post('logout', 'AuthController@logout')->middleware("auth");
+Route::group(['namespace' => 'App\Common\Controllers', 'prefix'=>'api'], function () {
+    Route::group(['middleware' => 'auth'], function () {
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+    });
 
-    Route::post('call-service', 'ServiceController@call')->middleware("verifyReq");
+    Route::group(['middleware' => 'verifyReq'], function () {
+        Route::post('call-service', 'ServiceController@call');
+    });
 });
